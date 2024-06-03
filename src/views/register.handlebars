@@ -1,0 +1,52 @@
+<div class="formsContainer" style="background-color: rgba(77, 3, 3, 0.632);">
+    <h1 style="background-color: rgb(30, 93, 109); padding: 2%; color: white">Registro</h1>
+    <form id="registerForm">
+        <div class="lineForms">
+            <label>Nombre</label>
+            <input name="first_name">
+        </div>
+        
+        <div class="lineForms">
+            <label>Apellido</label>
+            <input name="last_name">
+        </div>
+
+        <div class="lineForms">
+            <label>Email</label>
+        <input name="email">
+        </div>
+        
+        <div class="lineForms">
+            <label>Edad</label>
+            <input name="age">
+        </div>
+        
+        <div class="lineForms">
+            <label>Contraseña</label>
+            <input type="password" name="password">
+        </div>
+
+        <div class="lineForms">
+            <label>Cart id</label>
+            <input name="cart">
+        </div>
+
+         <!-- Nuevo campo para seleccionar el rol -->
+        <div class="lineForms">
+            <label>Rol</label>
+            <select name="role">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+                <option value="premium">Premium</option>
+            </select>
+        </div>
+
+        <div class="lineForms">
+            <input type="submit" style="background-color: rgb(166, 155, 238); width: 30%; font-size: 14px;">
+        </div>
+    </form>
+    <p>¿Ya tienes una cuenta? <a href="/users/login">Ingresa aquí</a></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/register.js"></script>

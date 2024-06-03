@@ -1,0 +1,24 @@
+<!--Esta vista es para mostrar los datos del user autenticado-->
+<div>
+    <h1 style="background-color: rgb(198, 224, 254); padding: 0.5%">Datos del usuario...</h1>
+    <div style="text-align: center; background-color: antiquewhite; padding: 1%; color: rgb(168, 69, 69);">
+        {{#if user}}
+            <h3><b>Nombre:</b> {{user.name}} </h3>
+            <h3><b>Correo:</b> {{user.email}}</h3>
+            <h3><b>Edad:</b> {{user.age}}</h3>
+            <h3><b>Rol:</b> {{user.role}}</h3>
+        {{else}}
+            <h2>¡Oh oh! No hay ningún usuario autenticado.</h2>
+            <div>
+                <button onclick="sesion()"><b>Iniciar sesión</b></button>
+            </div>
+        {{/if}}
+    </div>
+</div>
+
+<!--No hice un archivo js porque es muy poquito código :)-->
+<script>
+    function sesion() {
+        window.location.href = '/users/login';
+    }
+</script>

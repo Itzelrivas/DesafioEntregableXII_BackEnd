@@ -1,0 +1,37 @@
+<div class="formsContainer" style="background-color: rgba(244, 204, 144, 0.719);">
+    <h2 style="background-color: rgb(142, 8, 8); padding: 1.5%; color: white; text-align:center">¡Este link ha expirado!</h2>
+    <p style="text-align: center;">El tiempo de válidez de este link ha terminado. Si quieres que te llegue un nuevo link para reestablecer la contraseña, realiza lo siguiente:</p>
+    <form id="loginForm" style="padding: 1.5%; text-align:center">
+        <div class="lineForms">
+            <label>Email: </label>
+            <input name="email" id="emailInput" required>
+        </div>
+        <div>
+            <button type="button" class="button" id="sendNewLinkButton" style="background-color: rgb(69, 168, 160); width: 30%; font-size: 14px; margin: 2%; color: white"><b>Nuevo link</b></button>
+        </div>
+    </form>
+    <div id="responseMessage" style="text-align:center; margin-top: 20px;"></div>
+</div>
+
+<script>
+document.getElementById('sendNewLinkButton').addEventListener('click', async function(event) {
+    event.preventDefault(); // Prevenir el envío predeterminado del formulario
+    const email = document.getElementById('emailInput').value;
+    const responseMessage = document.getElementById('responseMessage');
+
+    try {
+        const response = await fetch(`/reset-password/newLink/${email}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.text();
+
+        responseMessage.innerHTML = `<p>${result}</p>`;
+    } catch (error) {
+        responseMessage.innerHTML = `<p style="color: red;">Error al enviar el nuevo enlace: ${error.message}</p>`;
+    }
+});
+</script>
