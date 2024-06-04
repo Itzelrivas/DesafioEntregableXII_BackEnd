@@ -21,7 +21,7 @@ export const registerUser = (req, res, next) => {
         });
     }
 
-    /*passport.authenticate('register', { 
+    passport.authenticate('register', { 
         failureRedirect: '/api/sessions/fail-register' 
     })(req, res, next); 
 
@@ -35,8 +35,9 @@ export const registerUser = (req, res, next) => {
     
     console.log("Registrando nuevo usuario.");
     //request.logger.info("Registrando nuevo usuario.")
-    res.status(200).send({ status: 'success', message: "Usuario creado de forma exitosa!!" });*/
-    passport.authenticate('register', { 
+    res.status(200).send({ status: 'success', message: "Usuario creado de forma exitosa!!" });
+
+    /*passport.authenticate('register', { 
         failureRedirect: '/api/sessions/fail-register' 
     }, (err, user, info) => {
         if (err) {
@@ -56,7 +57,7 @@ export const registerUser = (req, res, next) => {
             }
             res.status(200).send({ status: 'success', message: "Usuario creado de forma exitosa!!" });
         });
-    })(req, res, next);
+    })(req, res, next);*/
 };
 
 //Login del usuario con passport

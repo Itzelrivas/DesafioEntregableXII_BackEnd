@@ -368,14 +368,14 @@ export const updateProductController = async (request, response) => {
 //Eliminamos un producto
 export const deleteProductController = async (request, response) => {
     try {
+        //prueba- No funciona
+        const currentRol=request.session.user
+        console.log(currentRol)
+
 		let products = await getProductsService()
 		let productId = parseInt(request.params.pid)
 		let productsSize = products.length
 		const productPosition = products.findIndex(prod => prod.id === parseInt(productId))
-
-        //prueba- No funciona
-        const currentRol=request.session.user
-        console.log("tu rol es: " + currentRol)
 
 		if (productPosition < 0) { //Checamos que el producto exista
 			return response.status(202).send({ status: "info", error: `No se ha encontrado ningún producto con id=${productId}.` });

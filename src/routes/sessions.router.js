@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { githubCallbackController, loginGitHub, loginUser, registerUser } from '../controllers/passport.Controller.js';
-import { failLogin, failRegister } from '../controllers/users.Controller.js';
+import { changeRolController, failLogin, failRegister } from '../controllers/users.Controller.js';
 import errorHandler from '../services/errors/middlewares/index.js'
 
 const router = Router();
@@ -23,5 +23,8 @@ router.get("/fail-login", failLogin)
 
 //Middleware para el manejo de errores
 router.use(errorHandler);
+
+//Cambiar el role
+router.get("premium/:uid", changeRolController)
 
 export default router;

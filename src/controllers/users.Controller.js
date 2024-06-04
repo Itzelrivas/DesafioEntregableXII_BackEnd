@@ -1,6 +1,6 @@
 import config from "../config/config.js"
 import { updatePassword } from "../models/password/getNewPassword.js";
-import { comparePasswordService, getCartUserService, sendEmailPasswordService, verifyEmailService } from "../services/users.Service.js"
+import { changeRolService, comparePasswordService, getCartUserService, getUser_IdService, sendEmailPasswordService, verifyEmailService } from "../services/users.Service.js"
 import jwt from 'jsonwebtoken';
 
 //Obtenemos el carrito asociado a un user mediante el email
@@ -131,5 +131,31 @@ export const sendEmailPasswordController = async (request, response) => {
     } catch (error) {
         request.logger.error(`Ha surgido este error: ${error}`)
         response.status(500).send('<h2 style="color: red">¡Oh oh! Ha surgido un error y no se pudo generar un nuevo link.</h2>');
+    }
+}
+
+//Cambiamos el rol del usurio mediante su _id
+export const changeRolController = async (request, response) => {
+    try {
+        let _id = request.params
+        let user = await getUser_IdService(_id)
+        let role = user.role
+
+        if(!user){
+            return response.status(404).send(`El usuario con el _id ${_id} no se ha encontrado.`);
+        }
+
+        if(role !== 'premium' || role !== 'user'){
+            return response.status(404).send(`¡Oh oh! Esta función solo esta disponible para users con role premium o user.`);
+        }else{
+            await changeRolService(_id)
+            if(role === 'premium'){
+                return response.status(404).send(`Tu role de premium ha cambiado a user`);
+            }
+            return response.status(404).send(`Tu role de user ha cambiado a premium`);
+        }
+    } catch (error) {
+        request.logger.error(`Ha surgido este error: ${error}`)
+        response.status(500).send('<h2 style="color: red">¡Oh oh! Ha surgido un error y no se pudo cambiar el role.</h2>');
     }
 }

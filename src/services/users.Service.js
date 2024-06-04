@@ -1,7 +1,7 @@
 import { userModel } from '../models/users/user.model.js';
 import { cartsModel } from '../models/carts/carts.model.js';
 import { createHash, isValidPassword } from '../../utils.js';
-import { emailByCartId, getCartUser, verifyEmail } from "../models/users/usersData.js"
+import { changeRol, emailByCartId, getCartUser, getUser_Id, verifyEmail } from "../models/users/usersData.js"
 import { comparePassword, sendEmailPassword, updatePassword } from '../models/password/getNewPassword.js';
 
 //Registro de user
@@ -90,4 +90,14 @@ export const sendEmailPasswordService = async (email) => {
 //Comparamos las contraseñas
 export const comparePasswordService = async (newPassword, user) => {
     return  await comparePassword(newPassword, user)
+}
+
+//Devolvemos un usuario segun su _id
+export const getUser_IdService = async (_id) => {
+    return await getUser_Id(_id)
+}
+
+//Cambiamos el rol del usurio mediante su _id
+export const changeRolService = async (_id) => {
+    return await changeRol(_id)
 }

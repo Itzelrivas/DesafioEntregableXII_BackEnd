@@ -35,3 +35,29 @@ export const verifyEmail = async (email) => {
         return error;
     }
 }
+
+//Deolvemos un usuario segun su _id
+export const getUser_Id = async (_id) => {
+    try {
+        let user = await userModel.findOne({_id: _id})
+        return user
+    } catch (error) {
+        console.error("Ha surgido este error en models de users: " + error);
+        return error;
+    }
+}
+
+//Cambiamos el rol del usurio mediante su _id
+export const changeRol = async (_id) => {
+    try {
+        let user = await userModel.findOne({_id: _id})
+        if(user.role === 'user'){
+            return await userModel.findOneAndUpdate({ _id: _id }, { role: 'premium' })
+        }else if(user.role === 'premium'){
+            return await userModel.findOneAndUpdate({ _id: _id }, { role: 'user' })
+        }
+    } catch (error) {
+        console.error("Ha surgido este error en models de users: " + error);
+        return error;
+    }
+}

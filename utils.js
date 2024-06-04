@@ -43,6 +43,7 @@ export const isValidPassword = (user, password) => { //Va a validar que mi hash 
 
 
 //Para manejo de Auth.
+//Este sí funciona:
 export const auth = (request, response, next) => {
 	const userRol = rolCurrentUser
 	console.log(userRol)
@@ -55,8 +56,24 @@ export const auth = (request, response, next) => {
         response.status(403).send('Acceso denegado. Debes ser un administrador para realizar esta acción.');
     }
 };
+// Middleware de autenticación
+/*export const auth = (request, response, next) => {
+    if (!request.session.user || !request.session.user.role) {
+        return res.status(403).send('Para poder acceder a esta función es necesario que primero inicies sesión.');
+    }
+
+    const userRol = request.session.user.role;
+    console.log(userRol);
+
+    if (userRol === 'admin' || userRol === 'premium') {
+        next(); // Si el usuario es administrador o premium, permite que continúe con la solicitud
+    } else {
+        response.status(403).send('Acceso denegado. Debes ser un administrador o usuario premium para realizar esta acción.');
+    }
+};*/
 
 //Identificador de users
+//Estos si funcionan:
 export const userAuth = (request, response, next) => {
 	const userRol = request.session.user.role
 	console.log(userRol)
@@ -70,6 +87,23 @@ export const userAuth = (request, response, next) => {
         response.status(403).send('Acceso denegado. Debes tener rol de user para realizar esta acción.');
     }
 };
+
+/*export const userAuth = (request, response, next) => {
+    // Verificar si request.session.user está definido
+    if (!request.session.user) {
+        return response.status(403).send('Para acceder a esta función, primero inicia sesión.');
+    }
+
+    const userRol = request.session.user.role;
+    console.log(userRol);
+
+    if (userRol === 'user') {
+        next(); // Si el usuario es user, permite que continúe con la solicitud
+    } else {
+        console.log("Debes tener un rol de usuario para poder agregar productos a tu carrito.");
+        return response.status(403).send('Acceso denegado. Debes tener un rol de usuario para realizar esta acción.');
+    }
+};*/
 
 //Mocking de products
 faker.locale = 'es'; //Idioma de los datos. 
