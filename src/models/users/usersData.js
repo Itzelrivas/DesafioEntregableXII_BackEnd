@@ -36,7 +36,7 @@ export const verifyEmail = async (email) => {
     }
 }
 
-//Deolvemos un usuario segun su _id
+//Devolvemos un usuario segun su _id
 export const getUser_Id = async (_id) => {
     try {
         let user = await userModel.findOne({_id: _id})

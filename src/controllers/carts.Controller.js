@@ -341,7 +341,6 @@ export const getProductsCart = async (request, response) => {
             return response.send(`El carrito con id=${cartId} no existe :(`)
         }
     } catch (error) {
-        //console.error("Ha surgido este error: " + error);
         request.logger.error(`Ha surgido este error: ${error}`)
         response.status(500).send('<h2 style="color: red">¡Oh oh! Ha surgido un error y no se pueden mostrar los productos.</h2>');
     }
@@ -352,7 +351,6 @@ export const purchaseCartController = async (request, response) => {
     try {
         let cartId = parseInt(request.params.cid)
         let email = await emailByCartId(cartId)
-        //console.log(email)
         request.logger.debug(email)
         if(!email){
             return response.send(`El carrito con id = ${cartId} no esta asociado a ningún usuario.`);
@@ -364,7 +362,6 @@ export const purchaseCartController = async (request, response) => {
             return response.send(`Se ha finalizado la compra del carrito con id=${cartId} :). Los productos que no se pudieron procesar son ${leftProducts}`)
         }
     } catch (error) {
-        //console.error("Ha surgido este error: " + error);
         request.logger.error(`Ha surgido este error: ${error}`)
         response.status(500).send('<h2 style="color: red">¡Oh oh! Ha surgido un error y no se pueden mostrar los productos.</h2>');
     }

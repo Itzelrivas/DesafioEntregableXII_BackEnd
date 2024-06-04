@@ -36,28 +36,6 @@ export const registerUser = (req, res, next) => {
     console.log("Registrando nuevo usuario.");
     //request.logger.info("Registrando nuevo usuario.")
     res.status(200).send({ status: 'success', message: "Usuario creado de forma exitosa!!" });
-
-    /*passport.authenticate('register', { 
-        failureRedirect: '/api/sessions/fail-register' 
-    }, (err, user, info) => {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return res.redirect('/api/sessions/fail-register');
-        }
-        req.login(user, (err) => {
-            if (err) {
-                return next(err);
-            }
-            let verifyEmail = verifyEmailService(email)
-            if(verifyEmail === null){
-                req.logger.error("Error al registrar nuevo usuario.");
-                return res.status(200).send({ status: 'noSuccess', message: "Usuario no creado porque el correo ya ha sido utilizado anteriormente :(" });
-            }
-            res.status(200).send({ status: 'success', message: "Usuario creado de forma exitosa!!" });
-        });
-    })(req, res, next);*/
 };
 
 //Login del usuario con passport

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCartUserController, getInfoUser, loginUserController, logout, registerUserController } from "../controllers/users.Controller.js";
+import { changeRolController, getCartUserController, getInfoUser, loginUserController, logout, registerUserController } from "../controllers/users.Controller.js";
 
 const router = Router();
 
@@ -17,5 +17,8 @@ router.get("/current", getInfoUser);
 
 //Ruta para destruir la sesión 
 router.get("/logout", logout)
+
+//Cambiar el role
+router.get("/premium/:_id", changeRolController)
 
 export default router;

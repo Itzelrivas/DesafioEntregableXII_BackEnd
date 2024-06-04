@@ -35,10 +35,10 @@ export const loginUserController = async (request, response) => {
     })
 }
 
-
 //Obtenemos la info del usuario
 export const getInfoUser = async (request, response) => {
     const user = request.session.user
+
     request.logger.info(`Session: ${JSON.stringify(request.session, null, 2)}`)
     response.render('current', { user })
 }
@@ -65,21 +65,22 @@ export const logout = async (request, response) => {
 
 //Actualizamos la contraseña
 export const updatePasswordController = async (req, res) => {
+    //Token generado
     const { token } = req.params;
 
-    // Verificar el token
+    //Verificamos el token
     try {
         const decoded = jwt.verify(token, config.secret);
         const userId = decoded.userId;
 
         if (req.method === 'GET') {
-            // Renderizar la vista
+            //Renderizamos la vista
             res.render('resetPassword', { token });
         } else if (req.method === 'POST') {
             const { newPassword } = req.body;
 
             try {
-                // Lógica para actualizar la contraseña
+                //Lógica para actualizar la contraseña
                 const result = await comparePasswordService(newPassword, userId)
                 console.log(result)
                 if(result === false){
@@ -95,36 +96,13 @@ export const updatePasswordController = async (req, res) => {
         }
     } catch (error) {
         console.error('Token inválido o expirado:', error);
-        //res.status(400).send('El enlace para restablecer la contraseña ha expirado o es inválido.');
         res.render('expiredLink')
     }
-    /*const { token } = req.params;
-    if (req.method === 'GET') {
-        // Renderizar la vista
-        res.render('resetPassword', { token });
-    } else if (req.method === 'POST') {
-        // Lógica para actualizar la contraseña aquí
-        const { email, newPassword } = req.body;
-        const user = await verifyEmailService(email)
-        //Verificamos que el user este en la base de datos 
-        if(!user){
-            res.send('El correo proporcionado no esta registrado.');
-        }
-        try {
-            // Lógica para actualizar la contraseña
-            await updatePassword(user._id, newPassword);
-            res.send('Contraseña actualizada exitosamente.');
-        } catch (error) {
-            console.error('Error al actualizar la contraseña:', error);
-            res.status(500).send('Ha ocurrido un error al actualizar la contraseña.');
-        }
-    }*/
 };
 
 //Mandamos el correo para actualizar la contraseña
 export const sendEmailPasswordController = async (request, response) => {
     try {
-        //const { email } = request.body
         const email = request.params.email
         await sendEmailPasswordService(email)
         response.send("Se ha mandado un nuevo link al correo proporcionado :)")
@@ -137,22 +115,25 @@ export const sendEmailPasswordController = async (request, response) => {
 //Cambiamos el rol del usurio mediante su _id
 export const changeRolController = async (request, response) => {
     try {
-        let _id = request.params
+        // Extrae el _id del parámetro de la URL
+        const {_id} = request.params;
+
         let user = await getUser_IdService(_id)
         let role = user.role
+        console.log(role)
 
         if(!user){
             return response.status(404).send(`El usuario con el _id ${_id} no se ha encontrado.`);
         }
 
-        if(role !== 'premium' || role !== 'user'){
+        if(role !== 'premium' && role !== 'user'){
             return response.status(404).send(`¡Oh oh! Esta función solo esta disponible para users con role premium o user.`);
         }else{
             await changeRolService(_id)
             if(role === 'premium'){
-                return response.status(404).send(`Tu role de premium ha cambiado a user`);
+                return response.status(404).send(`Tu role de premium ha cambiado a user.`);
             }
-            return response.status(404).send(`Tu role de user ha cambiado a premium`);
+            return response.status(404).send(`Tu role de user ha cambiado a premium.`);
         }
     } catch (error) {
         request.logger.error(`Ha surgido este error: ${error}`)

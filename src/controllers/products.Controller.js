@@ -310,11 +310,8 @@ export const newProductController = async (request, response) => {
         const status = true;
         let thumbnailImages = request.files ? request.files.map(file => `/${file.filename}`) : [] // Formatear la ruta de la thumbnail
 
-        //Asignamos valor a owner
+        //Asignamos valor a owner 🔴
         let ownerFinal
-        //let info = currentEmail
-        //console.log(info + " es esto sin estudiar")
-        //onsole.log(request.session.info)
         if(owner.trim() === ""){
             ownerFinal = 'admin'
         }else{
