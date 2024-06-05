@@ -271,6 +271,10 @@ export const getProductsPaginatedButton = async (request, response) => {
 //Creamos un nuevo producto
 export const newProductController = async (request, response) => {
     try {
+        //prueba- No funciona
+        const currentRol=request.session.user.role
+        console.log(currentRol)
+
         let products = await getProductsService()
         const { title, description, code, price, stock, category, owner } = request.body;
         if (!title || !description || !code || !price || !stock || !category) {
@@ -366,7 +370,8 @@ export const updateProductController = async (request, response) => {
 export const deleteProductController = async (request, response) => {
     try {
         //prueba- No funciona
-        const currentRol=request.session.user
+        const currentRol=request.session.user.role
+        console.log("Este es el role: ")
         console.log(currentRol)
 
 		let products = await getProductsService()

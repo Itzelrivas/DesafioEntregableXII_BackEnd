@@ -61,14 +61,14 @@ if (config.useMongo) {
     connectMongoDB();
 
 	// Middleware para gestionar las sesiones de usuario
-	const sessionMiddleware = (request, response, next) => {
+	/*const sessionMiddleware = (request, response, next) => {
 		if (!request.session.user) {
 		// Si no hay una sesión de usuario, inicializa una nueva
 		request.session.user = {};
 		}
 		
 		next();
-	};
+	};*/
 
 	//Configuración de sesiones
 	app.use(session({
@@ -79,11 +79,11 @@ if (config.useMongo) {
 		}),
 		secret: config.secret,
 		resave: false, //guarda en memoria
-		saveUninitialized: false //lo guarda a penas se crea. Estaba en true pero las sessions no me funcionan
+		saveUninitialized: true //lo guarda a penas se crea. Estaba en true pero las sessions no me funcionan
 	}))
 
 	// Agregamos el middleware de sesiones personalizado a la cadena de middleware
-	app.use(sessionMiddleware);
+	//app.use(sessionMiddleware);
 
 } else {
     console.error("Argumento '--mongo' no encontrado en el comando");
